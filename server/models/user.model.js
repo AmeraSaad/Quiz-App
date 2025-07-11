@@ -38,6 +38,11 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    role: {
+      type: String,
+      enum: ["student", "teacher", "admin"],
+      default: "student",
+    },
 
     resetPasswordToken: String,
     resetPasswordExpiresAt: Date,
@@ -54,6 +59,7 @@ function validateRegisterUser(obj) {
     email: Joi.string().trim().min(5).max(100).required().email(),
     username: Joi.string().trim().min(2).max(200).required(),
     password: passwordComplexity().required(),
+    role: Joi.string().valid("student", "teacher", "admin").optional(),
   });
   return schema.validate(obj);
 }

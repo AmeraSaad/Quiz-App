@@ -17,7 +17,7 @@ const PASSWORD_RESET_SUCCESS_TEMPLATE = `
 
 const createWelcomeEmailTemplate = (username) => `
   <h1>Welcome, ${username}!</h1>
-  <p>Thanks for verifying your email. You can now book events.</p>
+  <p>Thanks for verifying your email.</p>
 `;
 
 module.exports = {

@@ -28,7 +28,7 @@ module.exports.signup = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: error.details[0].message });
   }
 
-  const { email, password, username } = req.body;
+  const { email, password, username, role = "student" } = req.body;
 
   const userAlreadyExists = await User.findOne({ email });
   const userNameAlreadyExists = await User.findOne({ username });
@@ -53,6 +53,7 @@ module.exports.signup = asyncHandler(async (req, res) => {
     email,
     password: hashedPassword,
     username,
+    role,
     verificationToken,
     verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000, // 24 hours
     // isVerified: true,
