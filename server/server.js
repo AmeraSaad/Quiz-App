@@ -6,6 +6,7 @@ const connectDB = require("./db/connectDB");
 const { notFound, errorHanlder } = require("./middleware/errors");
 const cookieParser = require('cookie-parser');
 const authRoutes = require("./routes/auth.routes");
+const quizRoutes = require("./routes/quiz.routes");
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 
 // Routes
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/quizzes", quizRoutes);
 
 // Error Hanlder Middleware
 app.use(notFound);
