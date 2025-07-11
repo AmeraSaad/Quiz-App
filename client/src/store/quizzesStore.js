@@ -2,7 +2,7 @@ import { create } from "zustand";
 import axios from "axios";
 
 const Base_URL = import.meta.env.VITE_API_URL;
-const API_URL = `${Base_URL}/api/quizzes`;
+const API_URL = `${Base_URL}/api/v1/quizzes`;
 axios.defaults.withCredentials = true;
 
 export const useQuizzesStore = create((set) => ({
