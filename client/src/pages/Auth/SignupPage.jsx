@@ -57,7 +57,7 @@ export default function SignupPage() {
 
         <button
           type="submit"
-          className="w-full bg-orange-600 text-white py-2 rounded hover:bg-orange-700"
+          className="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700"
           disabled={isLoading}
         >
           {isLoading ? "Signing up…" : "Sign Up"}
@@ -65,7 +65,7 @@ export default function SignupPage() {
 
         <p className="mt-4 text-sm">
           Already have an account?{" "}
-          <Link to="/login" className="text-blue-600">
+          <Link to="/login" className="text-indigo-600">
             Log in
           </Link>
         </p>

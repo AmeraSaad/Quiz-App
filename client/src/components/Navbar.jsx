@@ -45,7 +45,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <div className="flex-shrink-0">
-            <Link to="/" className="text-2xl font-bold text-orange-700">
+            <Link to="/" className="text-2xl font-bold text-indigo-700">
               Quiz app
             </Link>
           </div>
@@ -66,7 +66,7 @@ const Navbar = () => {
             {isAuthenticated && user && user.isAdmin && (
               <Link
                 to="/admin"
-                className="text-orange-600 hover:text-orange-800 px-3 py-2 rounded-md text-sm font-medium"
+                className="text-indigo-600 hover:text-indigo-800 px-3 py-2 rounded-md text-sm font-medium"
               >
                 Admin Panel
               </Link>

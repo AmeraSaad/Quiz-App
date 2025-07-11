@@ -56,7 +56,7 @@ export default function LoginPage() {
 
         <button
           type="submit"
-          className="w-full bg-orange-600 text-white py-2 mt-2 rounded hover:bg-orange-700"
+          className="w-full bg-indigo-600 text-white py-2 mt-2 rounded hover:bg-indigo-700"
           disabled={isLoading}
         >
           {isLoading ? "Logging in…" : "Log In"}
@@ -64,7 +64,7 @@ export default function LoginPage() {
 
         <p className="mt-4 text-sm">
           Don’t have an account?{" "}
-          <Link to="/signup" className="text-blue-600 hover:underline ">
+          <Link to="/signup" className="text-indigo-600 hover:underline ">
             Sign up
           </Link>
         </p>
