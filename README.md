@@ -1,0 +1,137 @@
+# Quiz App
+
+A full-stack web application for online quizzes, supporting student, teacher, and admin roles. Built with React (Vite) for the frontend and Node.js/Express/MongoDB for the backend.
+
+---
+
+## Features
+
+### For Students
+- View available quizzes with duration and details
+- Take quizzes (multiple attempts allowed)
+- View your score immediately after submission
+- See your quiz history and scores in your profile, sorted from newest to oldest
+
+### For Teachers
+- Create, edit, and delete quizzes (multiple question types: multiple-choice, true/false, short answer)
+- View all quizzes you have created
+- See all student submissions for each quiz
+
+### For Admins
+- Manage users and quizzes (extendable)
+
+### Authentication
+- Signup, login, email verification
+- Password reset and forgot password flows
+- Role-based access control
+
+---
+
+## Tech Stack
+
+- **Frontend:** React, Vite, Tailwind CSS, Zustand, React Router, Axios
+- **Backend:** Node.js, Express, MongoDB, Mongoose, JWT, Joi, Helmet, CORS, Nodemailer/Mailtrap
+- **Other:** ESLint, dotenv
+
+---
+
+## Folder Structure
+
+```
+Quiz App/
+  client/      # React frontend
+  server/      # Node.js/Express backend
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v18+ recommended)
+- MongoDB (local or Atlas)
+- Mailtrap account (for email testing)
+
+### 1. Clone the repository
+
+```bash
+git clone <your-repo-url>
+cd "Quiz App"
+```
+
+### 2. Setup the Backend
+
+```bash
+cd server
+npm install
+```
+
+Create a `.env` file in the `server/` directory with the following variables:
+
+```
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+CLIENT_URL=http://localhost:5173
+JWT_SECRET=your_jwt_secret
+MAILTRAP_USER=your_mailtrap_user
+MAILTRAP_PASS=your_mailtrap_pass
+```
+
+Start the backend server:
+
+```bash
+npm run dev
+```
+
+### 3. Setup the Frontend
+
+```bash
+cd ../client
+npm install
+```
+
+Create a `.env` file in the `client/` directory:
+
+```
+VITE_API_URL=http://localhost:5000
+```
+
+Start the frontend:
+
+```bash
+npm run dev
+```
+
+The app will be available at [http://localhost:5173](http://localhost:5173).
+
+---
+
+## API Endpoints
+
+- `POST /api/v1/auth/signup` - Register a new user
+- `POST /api/v1/auth/login` - Login
+- `POST /api/v1/auth/forgot-password` - Request password reset
+- `POST /api/v1/auth/reset-password` - Reset password
+- `GET /api/quizzes/available` - List quizzes for students
+- `POST /api/quizzes` - Create quiz (teacher)
+- `PUT /api/quizzes/:id` - Edit quiz (teacher)
+- `DELETE /api/quizzes/:id` - Delete quiz (teacher)
+- `POST /api/submissions` - Submit quiz answers
+- `GET /api/submissions/my` - Get student's own submissions
+- `GET /api/submissions/quiz/:quizId` - Get all submissions for a quiz (teacher)
+- ...and more
+
+---
+
+## Customization
+
+- Add more question types or quiz settings in `client/src/pages/teacher/components/QuizForm.jsx`
+- Extend user roles and permissions in backend middleware
+- Style the app using Tailwind CSS classes
+
+---
+
+## License
+
+MIT 
