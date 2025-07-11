@@ -1,6 +1,9 @@
 # Quiz App
 
-A full-stack web application for online quizzes, supporting student, teacher, and admin roles. Built with React (Vite) for the frontend and Node.js/Express/MongoDB for the backend.
+**Default Accounts for Testing:**
+
+- **Admin:** admin@quizapp.com / Admin@123
+- **Teacher:** teacher@quizapp.com / Teacher@123
 
 ---
 
@@ -123,15 +126,3 @@ The app will be available at [http://localhost:5173](http://localhost:5173).
 - ...and more
 
 ---
-
-## Customization
-
-- Add more question types or quiz settings in `client/src/pages/teacher/components/QuizForm.jsx`
-- Extend user roles and permissions in backend middleware
-- Style the app using Tailwind CSS classes
-
----
-
-## License
-
-MIT 
