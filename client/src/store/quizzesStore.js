@@ -96,4 +96,20 @@ export const useQuizzesStore = create((set) => ({
       throw error;
     }
   },
+
+  // Fetch available quizzes for students
+  getAvailableQuizzes: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axios.get(`${API_URL}/available`);
+      set({ quizzes: response.data.quizzes, isLoading: false });
+      return response.data.quizzes;
+    } catch (error) {
+      set({
+        error: error.response?.data?.message || "Error fetching available quizzes",
+        isLoading: false,
+      });
+      throw error;
+    }
+  },
 })); 
