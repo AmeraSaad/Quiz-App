@@ -260,3 +260,58 @@ module.exports.protectRoute = asyncHandler(async (req, res) => {
   }
   res.status(200).json({ success: true, user });
 });
+
+/**
+ *  @desc    Get all users (admin only)
+ *  @route   GET /api/auth/users
+ *  @method  GET
+ *  @access  admin
+ */
+module.exports.getAllUsers = asyncHandler(async (req, res) => {
+  if (!req.user || !req.user.isAdmin) {
+    return res.status(403).json({ success: false, message: "Not authorized" });
+  }
+  const users = await User.find({}, "_id username email role isAdmin isVerified");
+  res.status(200).json({ success: true, users });
+});
+
+/**
+ *  @desc    Update user role (admin only)
+ *  @route   PATCH /api/auth/users/:id/role
+ *  @method  PATCH
+ *  @access  admin
+ */
+module.exports.updateUserRole = asyncHandler(async (req, res) => {
+  if (!req.user || !req.user.isAdmin) {
+    return res.status(403).json({ success: false, message: "Not authorized" });
+  }
+  const { role } = req.body;
+  if (!role || !["student", "teacher"].includes(role)) {
+    return res.status(400).json({ success: false, message: "Invalid role" });
+  }
+  const user = await User.findById(req.params.id);
+  if (!user) {
+    return res.status(404).json({ success: false, message: "User not found" });
+  }
+  user.role = role;
+  await user.save();
+  res.status(200).json({ success: true, user: { _id: user._id, username: user.username, email: user.email, role: user.role } });
+});
+
+/**
+ *  @desc    Delete user (admin only)
+ *  @route   DELETE /api/auth/users/:id
+ *  @method  DELETE
+ *  @access  admin
+ */
+module.exports.deleteUser = asyncHandler(async (req, res) => {
+  if (!req.user || !req.user.isAdmin) {
+    return res.status(403).json({ success: false, message: "Not authorized" });
+  }
+  const user = await User.findById(req.params.id);
+  if (!user) {
+    return res.status(404).json({ success: false, message: "User not found" });
+  }
+  await user.deleteOne();
+  res.status(200).json({ success: true, message: "User deleted" });
+});
