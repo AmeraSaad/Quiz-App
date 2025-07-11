@@ -48,4 +48,17 @@ export const useSubmissionStore = create((set) => ({
       throw error;
     }
   },
+
+  // Get all submissions for a specific student (admin/student)
+  getStudentResults: async (studentId) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axios.get(`${API_URL}/results/${studentId}`);
+      set({ submissions: response.data.submissions, isLoading: false });
+      return response.data.submissions;
+    } catch (error) {
+      set({ error: error.response?.data?.message || "Error fetching student results", isLoading: false });
+      throw error;
+    }
+  },
 }));

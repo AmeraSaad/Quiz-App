@@ -49,7 +49,7 @@ function validateSubmission(obj) {
         })
       )
       .required(),
-    score: Joi.number().required(),
+    // score is not required from client
     timeTaken: Joi.number().required(),
   });
   return schema.validate(obj);

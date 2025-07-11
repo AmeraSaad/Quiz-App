@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useQuizzesStore } from "../../../store/quizzesStore";
 import toast from "react-hot-toast";
 import QuizForm from "./QuizForm";
+import QuizSubmissionsList from "./QuizSubmissionsList";
 
 const QuizDetails = ({ quiz }) => (
   <div className="mt-4 bg-blue-50 rounded p-4">
@@ -45,6 +46,7 @@ const QuizList = ({ quizzes, isLoading, error }) => {
   const { deleteQuiz, isLoading: isDeleting } = useQuizzesStore();
   const [expandedQuizId, setExpandedQuizId] = useState(null);
   const [editingQuiz, setEditingQuiz] = useState(null);
+  const [selectedQuizId, setSelectedQuizId] = useState(null);
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this quiz?")) {
@@ -103,6 +105,12 @@ const QuizList = ({ quizzes, isLoading, error }) => {
                 >
                   {isDeleting ? "Deleting..." : "Delete"}
                 </button>
+                <button
+                  className="px-3 py-1 bg-green-100 text-green-700 rounded hover:bg-green-200 text-sm"
+                  onClick={() => setSelectedQuizId(selectedQuizId === quiz._id ? null : quiz._id)}
+                >
+                  {selectedQuizId === quiz._id ? "Hide Submissions" : "View Submissions"}
+                </button>
               </div>
             </div>
             {/* Second row: Duration and View details */}
@@ -118,6 +126,10 @@ const QuizList = ({ quizzes, isLoading, error }) => {
             {/* Description always shown below name/duration */}
             <p className="text-gray-600 text-sm mt-2">{quiz.description}</p>
             {expanded && <QuizDetails quiz={quiz} />}
+            {/* Show submissions list if selected */}
+            {selectedQuizId === quiz._id && (
+              <QuizSubmissionsList quizId={quiz._id} onClose={() => setSelectedQuizId(null)} />
+            )}
           </div>
         );
       })}

@@ -44,4 +44,30 @@ exports.submitQuiz = asyncHandler(async (req, res) => {
   await submission.save();
 
   res.status(201).json({ success: true, submission });
+});
+
+// Get all submissions for a student
+exports.getStudentResults = asyncHandler(async (req, res) => {
+  const { studentId } = req.params;
+  // Only allow the student or an admin to view
+  if (!req.user || (req.user._id.toString() !== studentId && !req.user.isAdmin)) {
+    return res.status(403).json({ success: false, message: "Not authorized" });
+  }
+  const submissions = await Submission.find({ studentId }).populate('quizId');
+  res.status(200).json({ success: true, submissions });
+});
+
+// Get all submissions for a quiz (teacher/admin)
+exports.getQuizSubmissions = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  // Only allow teachers (owner) or admin
+  const quiz = await Quiz.findById(id);
+  if (!quiz) {
+    return res.status(404).json({ success: false, message: "Quiz not found" });
+  }
+  if (!req.user || (quiz.createdBy.toString() !== req.user._id.toString() && !req.user.isAdmin)) {
+    return res.status(403).json({ success: false, message: "Not authorized" });
+  }
+  const submissions = await Submission.find({ quizId: id }).populate('studentId');
+  res.status(200).json({ success: true, submissions });
 }); 
