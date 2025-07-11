@@ -11,7 +11,8 @@ import EmailVerificationPage from "../pages/Auth/EmailVerificationPage";
 import HomePage from "../pages/HomePage.jsx";
 import LoginPage from "../pages/Auth/LoginPage";
 import SignupPage from "../pages/Auth/SignupPage";
-
+import ProfilePage from "../pages/ProfilePage";
+import AdminPanel from "../pages/Admin/AdminPanal.jsx";
 
 // Lazy-loaded pages
 // const LoginPage = lazy(() => import("../pages/Auth/LoginPage"));
@@ -35,6 +36,20 @@ const routes = createBrowserRouter([
       {
         path: "",
         element: <HomePage />,
+      },
+      {
+        path: "profile",
+        element: (
+          <ProtectedRoute>{withSuspense(<ProfilePage />)}</ProtectedRoute>
+        ),
+      },
+      {
+        path: "admin",
+        element: (
+          <AdminProtectedRoute>
+            {withSuspense(<AdminPanel />)}
+          </AdminProtectedRoute>
+        ),
       },
     ],
   },
