@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/submissions";
+const API_URL = "http://localhost:5000/api/v1/submissions";
 axios.defaults.withCredentials = true;
 
 export const useSubmissionStore = create((set) => ({

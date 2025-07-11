@@ -140,7 +140,7 @@ The app will be available at [http://localhost:5173](http://localhost:5173).
 
 ### Submissions
 
-- `POST /api/submissions` - Submit quiz answers
-- `GET /api/submissions/my` - Get student's own submissions
-- `GET /api/submissions/results/:studentId` - Get all submissions for a student (admin/student)
-- `GET /api/submissions/quiz/:id` - Get all submissions for a quiz (teacher)
+- `POST /api/v1/submissions` - Submit quiz answers
+- `GET /api/v1/submissions/my` - Get student's own submissions
+- `GET /api/v1/submissions/results/:studentId` - Get all submissions for a student (admin/student)
+- `GET /api/v1/submissions/quiz/:id` - Get all submissions for a quiz (teacher)
