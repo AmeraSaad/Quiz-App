@@ -103,7 +103,7 @@ const StudentPage = () => {
   }
 
   return (
-    <QuizList quizzes={quizzes} onSelectQuiz={handleSelectQuiz} />
+    <QuizList quizzes={quizzes} onSelectQuiz={handleSelectQuiz} submissions={submissions} />
   );
 };
 

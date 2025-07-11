@@ -41,13 +41,16 @@ const ProfilePage = () => {
                 </tr>
               </thead>
               <tbody>
-                {submissions.map((sub) => (
-                  <tr key={sub._id} className="text-center">
-                    <td className="p-2 border">{sub.quizId?.title || 'Quiz'}</td>
-                    <td className="p-2 border">{sub.score}</td>
-                    <td className="p-2 border">{new Date(sub.createdAt).toLocaleString()}</td>
-                  </tr>
-                ))}
+                {submissions
+                  .slice()
+                  .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                  .map((sub) => (
+                    <tr key={sub._id} className="text-center">
+                      <td className="p-2 border">{sub.quizId?.title || 'Quiz'}</td>
+                      <td className="p-2 border">{sub.score}</td>
+                      <td className="p-2 border">{new Date(sub.createdAt).toLocaleString()}</td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           )}
