@@ -13,6 +13,7 @@ import LoginPage from "../pages/Auth/LoginPage";
 import SignupPage from "../pages/Auth/SignupPage";
 import ProfilePage from "../pages/ProfilePage";
 import AdminPanel from "../pages/Admin/AdminPanal.jsx";
+import TeacherPage from "../pages/teacher/teacherPage";
 
 // Lazy-loaded pages
 // const LoginPage = lazy(() => import("../pages/Auth/LoginPage"));
@@ -49,6 +50,14 @@ const routes = createBrowserRouter([
           <AdminProtectedRoute>
             {withSuspense(<AdminPanel />)}
           </AdminProtectedRoute>
+        ),
+      },
+      {
+        path: "teacher",
+        element: (
+          <ProtectedRoute>
+            <TeacherPage />
+          </ProtectedRoute>
         ),
       },
     ],
