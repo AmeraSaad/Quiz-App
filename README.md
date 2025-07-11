@@ -144,3 +144,23 @@ The app will be available at [http://localhost:5173](http://localhost:5173).
 - `GET /api/v1/submissions/my` - Get student's own submissions
 - `GET /api/v1/submissions/results/:studentId` - Get all submissions for a student (admin/student)
 - `GET /api/v1/submissions/quiz/:id` - Get all submissions for a quiz (teacher)
+
+---
+
+## API Documentation (Swagger)
+
+This project uses [Swagger (OpenAPI)](https://swagger.io/) for interactive REST API documentation.
+
+After starting the backend server, you can access the full API documentation and test endpoints directly from your browser.
+
+**How to use:**
+
+1. Make sure your backend server is running (`npm run dev` in the `server` folder).
+2. Open your browser and go to:  
+   [http://localhost:5000/api-docs](http://localhost:5000/api-docs)
+
+You will see an interactive UI where you can:
+- View all available endpoints, request/response schemas, and error codes.
+- Try out API requests directly from the browser (you can authorize with a JWT token for protected routes).
+
+> The documentation is automatically generated from the code using Swagger JSDoc comments.
