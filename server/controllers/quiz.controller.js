@@ -89,4 +89,15 @@ exports.deleteQuiz = asyncHandler(async (req, res) => {
   }
   await quiz.deleteOne();
   res.status(200).json({ success: true, message: "Quiz deleted" });
+});
+
+/**
+ * @desc    Get all available quizzes for students
+ * @route   GET /api/quizzes/available
+ * @access  Student
+ */
+exports.getAvailableQuizzes = asyncHandler(async (req, res) => {
+  // For now, return all quizzes. You can add filters (e.g., published, not owned by student) as needed.
+  const quizzes = await Quiz.find({});
+  res.status(200).json({ success: true, quizzes });
 }); 
