@@ -26,7 +26,7 @@ export const useAuthStore = create((set) => ({
       
       // localStorage.setItem()
       set({
-        user: response.data.user,
+        user: response.data.user || null,
         isAuthenticated: true,
         isLoading: false,
       });
@@ -48,7 +48,7 @@ export const useAuthStore = create((set) => ({
       });
       set({
         isAuthenticated: true,
-        user: response.data.user,
+        user: response.data.user || null,
         error: null,
         isLoading: false,
       });
@@ -81,7 +81,7 @@ export const useAuthStore = create((set) => ({
     try {
       const response = await axios.post(`${API_URL}/verify-email`, { code });
       set({
-        user: response.data.user,
+        user: response.data.user || null,
         isAuthenticated: true,
         isLoading: false,
       });
@@ -99,7 +99,7 @@ export const useAuthStore = create((set) => ({
     try {
       const response = await axios.get(`${API_URL}/check-auth`);
       set({
-        user: response.data.user,
+        user: response.data.user || null,
         isAuthenticated: true,
         isCheckingAuth: false,
       });

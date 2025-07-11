@@ -5,7 +5,7 @@ const AdminProtectedRoute = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
 
   // Check if user is authenticated and is an admin
-  if (!isAuthenticated || !user.isAdmin) {
+  if (!isAuthenticated || !user || !user.isAdmin) {
     return <Navigate to="/" replace />;
   }
 

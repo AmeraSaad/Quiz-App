@@ -46,7 +46,7 @@ const Navbar = () => {
         <div className="flex justify-between h-16 items-center">
           <div className="flex-shrink-0">
             <Link to="/" className="text-2xl font-bold text-orange-700">
-              Events
+              Quiz app
             </Link>
           </div>
 
@@ -63,7 +63,7 @@ const Navbar = () => {
             <p className="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">
               Support
             </p>
-            {isAuthenticated && user.isAdmin && (
+            {isAuthenticated && user && user.isAdmin && (
               <Link
                 to="/admin"
                 className="text-orange-600 hover:text-orange-800 px-3 py-2 rounded-md text-sm font-medium"
