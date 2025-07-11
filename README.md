@@ -112,17 +112,28 @@ The app will be available at [http://localhost:5173](http://localhost:5173).
 
 ## API Endpoints
 
+### Auth
 - `POST /api/v1/auth/signup` - Register a new user
 - `POST /api/v1/auth/login` - Login
+- `POST /api/v1/auth/logout` - Logout
+- `POST /api/v1/auth/verify-email` - Verify email
 - `POST /api/v1/auth/forgot-password` - Request password reset
-- `POST /api/v1/auth/reset-password` - Reset password
-- `GET /api/quizzes/available` - List quizzes for students
+- `POST /api/v1/auth/reset-password/:token` - Reset password
+- `GET /api/v1/auth/check-auth` - Check authentication (protected)
+- `GET /api/v1/auth/users` - Get all users (admin only)
+- `PATCH /api/v1/auth/users/:id/role` - Update user role (admin only)
+- `DELETE /api/v1/auth/users/:id` - Delete user (admin only)
+
+### Quizzes
 - `POST /api/quizzes` - Create quiz (teacher)
+- `GET /api/quizzes/my` - Get all quizzes created by the logged-in teacher
+- `GET /api/quizzes/available` - List quizzes for students
+- `GET /api/quizzes/:id` - Get a single quiz by ID
 - `PUT /api/quizzes/:id` - Edit quiz (teacher)
 - `DELETE /api/quizzes/:id` - Delete quiz (teacher)
+
+### Submissions
 - `POST /api/submissions` - Submit quiz answers
 - `GET /api/submissions/my` - Get student's own submissions
-- `GET /api/submissions/quiz/:quizId` - Get all submissions for a quiz (teacher)
-- ...and more
-
----
+- `GET /api/submissions/results/:studentId` - Get all submissions for a student (admin/student)
+- `GET /api/submissions/quiz/:id` - Get all submissions for a quiz (teacher)
