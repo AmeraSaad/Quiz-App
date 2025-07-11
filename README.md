@@ -10,20 +10,24 @@
 ## Features
 
 ### For Students
+
 - View available quizzes with duration and details
 - Take quizzes (multiple attempts allowed)
 - View your score immediately after submission
 - See your quiz history and scores in your profile, sorted from newest to oldest
 
 ### For Teachers
+
 - Create, edit, and delete quizzes (multiple question types: multiple-choice, true/false, short answer)
 - View all quizzes you have created
 - See all student submissions for each quiz
 
 ### For Admins
+
 - Manage users and quizzes (extendable)
 
 ### Authentication
+
 - Signup, login, email verification
 - Password reset and forgot password flows
 - Role-based access control
@@ -113,6 +117,7 @@ The app will be available at [http://localhost:5173](http://localhost:5173).
 ## API Endpoints
 
 ### Auth
+
 - `POST /api/v1/auth/signup` - Register a new user
 - `POST /api/v1/auth/login` - Login
 - `POST /api/v1/auth/logout` - Logout
@@ -125,14 +130,16 @@ The app will be available at [http://localhost:5173](http://localhost:5173).
 - `DELETE /api/v1/auth/users/:id` - Delete user (admin only)
 
 ### Quizzes
-- `POST /api/quizzes` - Create quiz (teacher)
-- `GET /api/quizzes/my` - Get all quizzes created by the logged-in teacher
-- `GET /api/quizzes/available` - List quizzes for students
-- `GET /api/quizzes/:id` - Get a single quiz by ID
-- `PUT /api/quizzes/:id` - Edit quiz (teacher)
-- `DELETE /api/quizzes/:id` - Delete quiz (teacher)
+
+- `POST /api/v1/quizzes` - Create quiz (teacher)
+- `GET /api/v1/quizzes/my` - Get all quizzes created by the logged-in teacher
+- `GET /api/v1/quizzes/available` - List quizzes for students
+- `GET /api/v1/quizzes/:id` - Get a single quiz by ID
+- `PUT /api/v1/quizzes/:id` - Edit quiz (teacher)
+- `DELETE /api/v1/quizzes/:id` - Delete quiz (teacher)
 
 ### Submissions
+
 - `POST /api/submissions` - Submit quiz answers
 - `GET /api/submissions/my` - Get student's own submissions
 - `GET /api/submissions/results/:studentId` - Get all submissions for a student (admin/student)

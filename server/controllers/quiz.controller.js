@@ -3,7 +3,7 @@ const { Quiz, validateQuiz } = require("../models/quiz.model");
 
 /**
  * @desc    Create a new quiz (teacher only)
- * @route   POST /api/quizzes
+ * @route   POST /api/v1/quizzes
  * @access  Teacher
  */
 exports.createQuiz = asyncHandler(async (req, res) => {
@@ -21,7 +21,7 @@ exports.createQuiz = asyncHandler(async (req, res) => {
 
 /**
  * @desc    Get all quizzes created by the logged-in teacher
- * @route   GET /api/quizzes/my
+ * @route   GET /api/v1/quizzes/my
  * @access  Teacher
  */
 exports.getMyQuizzes = asyncHandler(async (req, res) => {
@@ -34,7 +34,7 @@ exports.getMyQuizzes = asyncHandler(async (req, res) => {
 
 /**
  * @desc    Get a single quiz by ID
- * @route   GET /api/quizzes/:id
+ * @route   GET /api/v1/quizzes/:id
  * @access  Teacher (owner) or Admin
  */
 exports.getQuizById = asyncHandler(async (req, res) => {
@@ -54,7 +54,7 @@ exports.getQuizById = asyncHandler(async (req, res) => {
 
 /**
  * @desc    Update a quiz (teacher only, must be owner)
- * @route   PUT /api/quizzes/:id
+ * @route   PUT /api/v1/quizzes/:id
  * @access  Teacher (owner)
  */
 exports.updateQuiz = asyncHandler(async (req, res) => {
@@ -76,7 +76,7 @@ exports.updateQuiz = asyncHandler(async (req, res) => {
 
 /**
  * @desc    Delete a quiz (teacher only, must be owner)
- * @route   DELETE /api/quizzes/:id
+ * @route   DELETE /api/v1/quizzes/:id
  * @access  Teacher (owner)
  */
 exports.deleteQuiz = asyncHandler(async (req, res) => {
@@ -93,7 +93,7 @@ exports.deleteQuiz = asyncHandler(async (req, res) => {
 
 /**
  * @desc    Get all available quizzes for students
- * @route   GET /api/quizzes/available
+ * @route   GET /api/v1/quizzes/available
  * @access  Student
  */
 exports.getAvailableQuizzes = asyncHandler(async (req, res) => {
