@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuizzesStore } from "../../../store/quizzesStore";
+import toast from "react-hot-toast";
 
 const defaultQuestion = {
   type: "multiple-choice",
@@ -8,8 +9,8 @@ const defaultQuestion = {
   correctAnswer: "",
 };
 
-const QuizForm = ({ onClose }) => {
-  const { createQuiz, isLoading, error } = useQuizzesStore();
+const QuizForm = ({ onClose, quiz, mode = "create" }) => {
+  const { createQuiz, updateQuiz, isLoading, error } = useQuizzesStore();
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -18,6 +19,23 @@ const QuizForm = ({ onClose }) => {
   });
   const [formError, setFormError] = useState(null);
 
+  // Initialize form with quiz data if editing
+  useEffect(() => {
+    if (mode === "edit" && quiz) {
+      setForm({
+        title: quiz.title || "",
+        description: quiz.description || "",
+        duration: quiz.duration || 30,
+        questions: quiz.questions && quiz.questions.length > 0
+          ? quiz.questions.map((q) => ({
+              ...q,
+              options: q.type === "multiple-choice" ? q.options : undefined,
+            }))
+          : [JSON.parse(JSON.stringify(defaultQuestion))],
+      });
+    }
+  }, [mode, quiz]);
+
   const handleChange = (e) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
   };
@@ -25,11 +43,7 @@ const QuizForm = ({ onClose }) => {
   const handleQuestionChange = (idx, field, value) => {
     setForm((f) => {
       const questions = [...f.questions];
-      if (field === "options") {
-        questions[idx][field] = value;
-      } else {
-        questions[idx][field] = value;
-      }
+      questions[idx][field] = value;
       return { ...f, questions };
     });
   };
@@ -38,6 +52,28 @@ const QuizForm = ({ onClose }) => {
     setForm((f) => {
       const questions = [...f.questions];
       questions[qIdx].options[oIdx] = value;
+      return { ...f, questions };
+    });
+  };
+
+  const addOption = (qIdx) => {
+    setForm((f) => {
+      const questions = [...f.questions];
+      questions[qIdx] = {
+        ...questions[qIdx],
+        options: [...questions[qIdx].options, ""]
+      };
+      return { ...f, questions };
+    });
+  };
+
+  const removeOption = (qIdx, oIdx) => {
+    setForm((f) => {
+      const questions = [...f.questions];
+      questions[qIdx] = {
+        ...questions[qIdx],
+        options: questions[qIdx].options.filter((_, i) => i !== oIdx)
+      };
       return { ...f, questions };
     });
   };
@@ -56,36 +92,59 @@ const QuizForm = ({ onClose }) => {
     }));
   };
 
-  const addOption = (qIdx) => {
-    setForm((f) => {
-      const questions = [...f.questions];
-      questions[qIdx].options.push("");
-      return { ...f, questions };
-    });
-  };
-
-  const removeOption = (qIdx, oIdx) => {
-    setForm((f) => {
-      const questions = [...f.questions];
-      questions[qIdx].options.splice(oIdx, 1);
-      return { ...f, questions };
-    });
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormError(null);
+
+    // Clean up questions before sending to backend
+    const cleanedQuestions = form.questions.map((q) => {
+      if (q.type === "multiple-choice") {
+        return {
+          type: q.type,
+          text: q.text,
+          options: q.options.filter((opt) => opt.trim() !== ""),
+          correctAnswer: q.correctAnswer,
+        };
+      } else if (q.type === "true-false") {
+        return {
+          type: q.type,
+          text: q.text,
+          correctAnswer: q.correctAnswer, // should be "true" or "false"
+        };
+      } else if (q.type === "short-answer") {
+        return {
+          type: q.type,
+          text: q.text,
+          correctAnswer: q.correctAnswer,
+        };
+      }
+      return q;
+    });
+
+    const payload = {
+      ...form,
+      questions: cleanedQuestions,
+      duration: Number(form.duration),
+    };
+
     try {
-      await createQuiz(form);
+      if (mode === "edit" && quiz && quiz._id) {
+        await updateQuiz(quiz._id, payload);
+        toast.success("Quiz updated successfully!");
+      } else {
+        await createQuiz(payload);
+        toast.success("Quiz created successfully!");
+      }
       if (onClose) onClose();
     } catch (err) {
-      setFormError(err.response?.data?.message || "Error creating quiz");
+      setFormError(err.response?.data?.message || "Error submitting quiz");
+      toast.error(err.response?.data?.message || "Error submitting quiz");
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="bg-white shadow rounded p-6 mb-8">
-      <h2 className="text-xl font-bold mb-4 text-blue-700">Create Quiz</h2>
+      <h2 className="text-xl font-bold mb-4 text-blue-700">{mode === "edit" ? "Edit Quiz" : "Create Quiz"}</h2>
       {formError && <div className="text-red-500 mb-2">{formError}</div>}
       {error && <div className="text-red-500 mb-2">{error}</div>}
       <div className="mb-3">
@@ -253,7 +312,7 @@ const QuizForm = ({ onClose }) => {
           className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
           disabled={isLoading}
         >
-          {isLoading ? "Creating..." : "Create Quiz"}
+          {isLoading ? (mode === "edit" ? "Updating..." : "Creating...") : (mode === "edit" ? "Update Quiz" : "Create Quiz")}
         </button>
       </div>
     </form>
